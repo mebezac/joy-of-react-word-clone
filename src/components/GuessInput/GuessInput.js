@@ -8,11 +8,7 @@ function GuessInput({guesses, setGuesses}) {
       window.alert('Guess must be exactly 5 letters long.')
       return;
     }
-    const newGuess = {
-      id: crypto.randomUUID(),
-      word: guess
-    };
-    setGuesses([...guesses, newGuess]);
+    setGuesses([...guesses, guess]);
     setGuess('');
   };
 
