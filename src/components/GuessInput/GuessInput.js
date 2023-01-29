@@ -1,6 +1,6 @@
 import React from "react";
 
-function GuessInput() {
+function GuessInput({guesses, setGuesses}) {
   const [guess, setGuess] = React.useState("");
   const handleSubmit = e => {
     e.preventDefault();
@@ -8,7 +8,11 @@ function GuessInput() {
       window.alert('Guess must be exactly 5 letters long.')
       return;
     }
-    console.log({guess});
+    const newGuess = {
+      id: crypto.randomUUID(),
+      word: guess
+    };
+    setGuesses([...guesses, newGuess]);
     setGuess('');
   };
 
