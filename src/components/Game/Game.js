@@ -2,6 +2,7 @@ import React from 'react';
 
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
+import GameResultBanner from '../GameResultBanner';
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
 
@@ -12,13 +13,34 @@ console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
+  const [gameResult, setGameResult] = React.useState('');
+
+  React.useEffect(() => {
+    if (guesses[guesses.length - 1] === answer) {
+      setGameResult('win');
+    } else if (guesses.length === 6) {
+      setGameResult('lose');
+    }
+  }, [guesses]);
+
   return(
     <>
-      <GuessResults answer={answer} guesses={guesses} />
+      <GuessResults
+        answer={answer}
+        guesses={guesses}
+      />
       <GuessInput
+        gameResult={gameResult}
         guesses={guesses}
         setGuesses={setGuesses}
       />
+      {gameResult &&
+        <GameResultBanner
+          answer={answer}
+          guessCount={guesses.length}
+          gameResult={gameResult}
+        />
+      }
     </>
   );
 }
