@@ -3,13 +3,14 @@ import React from 'react';
 import { sample } from '../../utils';
 import { WORDS } from '../../data';
 import GameOverBanner from '../GameOverBanner';
-import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults';
+import KeyboardInput from '../KeyboardInput';
 
 function Game() {
   const [answer, setAnswer] = React.useState(sample(WORDS));
   const [guesses, setGuesses] = React.useState([]);
   const [gameState, setGameState] = React.useState('');
+  const [guessChars, setGuessChars] = React.useState([]);
 
   const resetGame = () => {
     setAnswer(sample(WORDS));
@@ -23,7 +24,8 @@ function Game() {
     } else if (guesses.length === 6) {
       setGameState('lose');
     }
-  }, [answer, guesses]);
+    setGuessChars([]);
+  }, [answer, gameState, guesses]);
 
   React.useEffect(() => {
     if (answer) {
@@ -31,16 +33,24 @@ function Game() {
     }
   }, [answer]);
 
+  React.useEffect(() => {
+    if (guessChars.length === 5) {
+      return setGuesses(prevGuesses => [...prevGuesses, guessChars.join('')]);
+    }
+  }, [guessChars]);
+
   return(
     <>
       <GuessResults
         answer={answer}
         guesses={guesses}
+        guessChars={guessChars}
       />
-      <GuessInput
-        gameState={gameState}
+      <KeyboardInput
+        answer={answer}
         guesses={guesses}
-        setGuesses={setGuesses}
+        guessChars={guessChars}
+        setGuessChars={setGuessChars}
       />
       {gameState &&
         <GameOverBanner
