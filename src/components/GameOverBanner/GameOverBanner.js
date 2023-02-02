@@ -1,9 +1,9 @@
 import React from "react";
 
-function GameResultBanner({ answer, guessCount, gameResult }) {
-  const resultClassName = gameResult === 'win' ? 'happy' : 'sad';
+function GameOverBanner({ answer, guessCount, gameState, resetGame }) {
+  const resultClassName = gameState === 'win' ? 'happy' : 'sad';
   let message = '';
-  if (gameResult === 'win') {
+  if (gameState === 'win') {
     message = (
       <>
         <strong>Congratulations!</strong> Got it in
@@ -11,7 +11,7 @@ function GameResultBanner({ answer, guessCount, gameResult }) {
         <strong>{guessCount} guesses</strong>.
       </>
     );
-  } else if (gameResult === 'lose') {
+  } else if (gameState === 'lose') {
     message = (
       <>
         Sorry, the correct answer is <strong>{answer}</strong>.
@@ -20,15 +20,18 @@ function GameResultBanner({ answer, guessCount, gameResult }) {
   }
   return(
     <>
-      {gameResult &&
+      {gameState &&
         <div className={`banner ${resultClassName}`}>
           <p>
             {message}
           </p>
+          <button className="reset-button" onClick={resetGame}>
+            Play Again
+          </button>
         </div>
       }
     </>
   );
 }
 
-export default GameResultBanner;
+export default GameOverBanner;

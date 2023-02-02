@@ -40,6 +40,14 @@ button {
   color: inherit;
 }
 
+.reset-button {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  padding: 8px 16px;
+  border: 2px solid var(--color-gray-300);
+  border-radius: 4px;
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;
